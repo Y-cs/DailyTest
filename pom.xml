@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>self</groupId>
+    <artifactId>DailyTest</artifactId>
+    <version>1.0</version>
+    <modules>
+        <module>basis-test</module>
+        <module>leetcode-test</module>
+        <module>struct-test</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+        <junit-jupiter-version>5.6.2</junit-jupiter-version>
+        <commons-version>3.11</commons-version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit-jupiter-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
