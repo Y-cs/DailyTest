@@ -11,6 +11,7 @@
         <module>basis-test</module>
         <module>leetcode-test</module>
         <module>struct-test</module>
+        <module>design_patterns</module>
     </modules>
     <packaging>pom</packaging>
 
