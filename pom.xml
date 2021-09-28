@@ -12,6 +12,7 @@
         <module>leetcode-test</module>
         <module>struct-test</module>
         <module>design_patterns</module>
+        <module>spring-security-test</module>
     </modules>
     <packaging>pom</packaging>
 
