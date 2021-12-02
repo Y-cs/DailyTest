@@ -20,11 +20,11 @@ public class FindWords {
             //越界
             return false;
         }
-        if (words.length()==index){
+        if (words.length() == index) {
             return true;
         }
-        board[x][y] == words.charAt(index)
-
+//        board[x][y] == words.charAt(index)
+        return false;
     }
 
 

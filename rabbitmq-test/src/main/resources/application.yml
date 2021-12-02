@@ -1,0 +1,8 @@
+spring:
+  rabbitmq:
+    username: admin
+    password: ycs1996515
+    host: 118.24.126.49
+    port: 5672
+application:
+  queue: test-queue

@@ -1,7 +1,7 @@
 package ecc;
 
 
-import lombok.extern.slf4j.Slf4j;
+//import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
 
@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
  * @Author: yuanchangshuai
  * @Date: 2020/11/25 14:23
  */
-@Slf4j
+//@Slf4j
 public class EccTest {
 
     public static void main(String[] args) throws Exception {

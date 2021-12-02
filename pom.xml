@@ -13,12 +13,18 @@
         <module>struct-test</module>
         <module>design_patterns</module>
         <module>spring-security-test</module>
+        <module>checkpoint-test</module>
+        <module>util-test</module>
+        <module>es-client-pool</module>
+        <module>kotlin-test</module>
+        <module>rabbitmq-test</module>
     </modules>
     <packaging>pom</packaging>
 
     <properties>
         <junit-jupiter-version>5.6.2</junit-jupiter-version>
         <commons-version>3.11</commons-version>
+        <lombok.version>1.18.10</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -28,7 +34,11 @@
                 <artifactId>junit-jupiter-api</artifactId>
                 <version>${junit-jupiter-version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
