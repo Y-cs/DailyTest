@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import timer.main.ano.Limiting;
 import timer.main.ano.LimitingGroup;
 import timer.main.context.LimitingGroupObject;
+import timer.main.enums.LimitingPartitionEnum;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,10 +28,12 @@ public class TestController {
     private RedissonClient redisson;
 
     @GetMapping("/test")
-    @Limiting(permits = 1 ,group = @LimitingGroup(permitsPerTime = 1L,time = 10))
+    @Limiting(permits = 1 ,group =
+        @LimitingGroup(group = "1",permitsPerTime = 1L,time = 10,code = "#dto.appid",partitionEnum = LimitingPartitionEnum.IP))
     public void tset(){
         System.out.println("1111111111111");
     }
+
 
     @GetMapping("/test2")
     public void test2(){

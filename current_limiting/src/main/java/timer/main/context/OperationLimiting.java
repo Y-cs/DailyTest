@@ -33,6 +33,9 @@ public class OperationLimiting {
                 key = limitingGroup.group() == null || limitingGroup.group().trim().length() == 0 ? this.getDefaultKey(clazz, methodSignature) : limitingGroup.group();
                 LimitingSupport limitingSupport = getOrRegister(key, limitingGroup);
                 String cacheKey = getCacheKey(key, limitingGroup, httpServletRequest);
+                if (limiting.permits() > limitingGroup.permitsPerTime()) {
+                    throw new RuntimeException("请求的令牌数不能大于生产速率");
+                }
                 if (!limitingSupport.tryAcquire(cacheKey, limiting.permits(), limiting.waitTime())) {
                     return false;
                 }

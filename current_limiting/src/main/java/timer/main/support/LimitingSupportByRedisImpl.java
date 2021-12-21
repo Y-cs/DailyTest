@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class LimitingSupportByRedisImpl implements LimitingSupport {
 
-    private static final String CACHE_KEY = "LIMITING:CACHE:";
+    private static final String CACHE_KEY = "LIMITING_CACHE:";
 
     //组对象
     private final LimitingGroupObject limitingGroupObject;
