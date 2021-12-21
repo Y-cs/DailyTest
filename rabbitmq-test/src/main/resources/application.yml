@@ -1,8 +1,8 @@
 spring:
   rabbitmq:
     username: admin
-    password: ycs1996515
-    host: 118.24.126.49
+    password: ^{x8uwABd(K|2cr
+    host: 106.15.60.131
     port: 5672
 application:
-  queue: test-queue
+  queue: old.ls.repair.record.queue

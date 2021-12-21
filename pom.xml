@@ -18,6 +18,7 @@
         <module>es-client-pool</module>
         <module>kotlin-test</module>
         <module>rabbitmq-test</module>
+        <module>current_limiting</module>
     </modules>
     <packaging>pom</packaging>
 

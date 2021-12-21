@@ -68,6 +68,11 @@ public abstract class SimpleDirectRabbitQueue {
      */
     protected abstract void handle(Message message, Channel channel) throws Exception;
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     @RabbitHandler(isDefault = true)
     public void rabbitListenerHandle(Message message, Channel channel) {
         try {
