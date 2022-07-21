@@ -3,9 +3,9 @@ package timer.main.context;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import timer.main.cache.LimitingCache;
 import timer.main.cache.LimitingCacheExpire;
 import timer.main.enums.LimitingPartitionEnum;
+import timer.main.enums.LimitingSupportEnum;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,5 +30,7 @@ public class LimitingGroupObject extends LimitingCacheExpire<Object> {
     private LimitingPartitionEnum partitionEnum;
 
     private String code;
+
+    private LimitingSupportEnum supportType;
 
 }

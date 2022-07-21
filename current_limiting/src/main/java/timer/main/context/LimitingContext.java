@@ -1,12 +1,15 @@
 package timer.main.context;
 
-import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import timer.main.cache.CacheFactory;
 import timer.main.cache.LimitingCache;
+import timer.main.enums.LimitingSupportEnum;
 import timer.main.exception.LimitingCreateException;
 import timer.main.support.LimitingSupport;
 import timer.main.support.LimitingSupportByRedisImpl;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @Author: YuanChangShuai
@@ -15,11 +18,16 @@ import timer.main.support.LimitingSupportByRedisImpl;
  **/
 public class LimitingContext {
 
-    private RedissonClient redisson;
+    private RedissonClient redisson = null;
     /**
      * 组缓存对象
      */
     private final LimitingCache<LimitingSupport> limitingGroupCache;
+
+    /**
+     * 一个初始化暂存对象
+     */
+    private List<LimitingGroupObject> limitingGroupObjects;
 
     public LimitingContext() {
         /**
@@ -28,12 +36,41 @@ public class LimitingContext {
         this.limitingGroupCache = CacheFactory.createCache(false);
     }
 
+    public LimitingContext(List<LimitingGroupObject> list) {
+        this();
+        limitingGroupObjects = list;
+    }
+
+    /**
+     * 用于初始化注册,这样做的好处是不在构造时注册,避免下游无法正常获取配置
+     *
+     * @throws LimitingCreateException
+     */
+    public void init() throws LimitingCreateException {
+        for (LimitingGroupObject limitingGroupObject : limitingGroupObjects) {
+            register(limitingGroupObject);
+        }
+    }
+
     /**
      * 注册一个限流器
      */
     public LimitingSupport register(LimitingGroupObject limitingGroupObject) throws LimitingCreateException {
         if (limitingGroupObject != null && limitingGroupObject.getGroup() != null && limitingGroupObject.getGroup().length() > 0) {
-            LimitingSupportByRedisImpl limitingSupportByRedis = new LimitingSupportByRedisImpl(this, limitingGroupObject);
+            /*
+            这里是可以支持工厂类扩展的点
+            根据创建组的类型使用不同的support支持
+            这里全部使用的redis
+             */
+            LimitingSupportEnum supportType = Optional.ofNullable(limitingGroupObject.getSupportType()).orElse(LimitingSupportEnum.REDIS);
+            LimitingSupportByRedisImpl limitingSupportByRedis;
+            switch (supportType) {
+                case LOCALHOST:
+                case DB:
+                case REDIS:
+                default:
+                    limitingSupportByRedis = new LimitingSupportByRedisImpl(redisson, limitingGroupObject);
+            }
             limitingGroupCache.cache(limitingGroupObject.getGroup(), limitingSupportByRedis);
             return limitingSupportByRedis;
         }

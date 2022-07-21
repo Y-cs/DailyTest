@@ -1,5 +1,6 @@
 package timer.main.support;
 
+import timer.main.context.LimitingGroupObject;
 import timer.main.exception.LimitingCreateException;
 
 import java.util.concurrent.TimeUnit;
@@ -33,4 +34,5 @@ public interface LimitingSupport {
      */
     void acquire(String key, long flow) throws LimitingCreateException;
 
+    LimitingGroupObject getLimitingGroupObject();
 }

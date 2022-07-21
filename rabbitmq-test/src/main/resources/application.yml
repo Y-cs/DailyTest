@@ -1,8 +1,22 @@
 spring:
+
   rabbitmq:
-    username: admin
-    password: ^{x8uwABd(K|2cr
-    host: 106.15.60.131
+    host: 47.102.117.127
     port: 5672
-application:
-  queue: old.ls.repair.record.queue
+    username: admin
+    password: admin
+    publisher-confirm-type: CORRELATED
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+      retry:
+        enabled: true
+        max-attempts: 5
+    cache:
+      channel:
+        size: 10
+      connection:
+        mode: channel
+#application:
+#  queue: old.ls.repair.record.queue

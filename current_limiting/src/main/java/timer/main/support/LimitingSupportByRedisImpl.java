@@ -5,7 +5,6 @@ import org.redisson.api.RRateLimiter;
 import org.redisson.api.RateIntervalUnit;
 import org.redisson.api.RateType;
 import org.redisson.api.RedissonClient;
-import timer.main.context.LimitingContext;
 import timer.main.context.LimitingGroupObject;
 import timer.main.enums.LimitingPartitionEnum;
 import timer.main.exception.LimitingCreateException;
@@ -27,8 +26,8 @@ public class LimitingSupportByRedisImpl implements LimitingSupport {
 
     private final RedissonClient redisson;
 
-    public LimitingSupportByRedisImpl(LimitingContext limitingContext, LimitingGroupObject limitingGroupObject) throws LimitingCreateException {
-        this.redisson = limitingContext.getRedisson();
+    public LimitingSupportByRedisImpl(RedissonClient redisson, LimitingGroupObject limitingGroupObject) throws LimitingCreateException {
+        this.redisson = redisson;
         this.limitingGroupObject = limitingGroupObject;
         if (limitingGroupObject.getPartitionEnum() == LimitingPartitionEnum.ALL) {
             register(limitingGroupObject.getGroup());
@@ -45,6 +44,12 @@ public class LimitingSupportByRedisImpl implements LimitingSupport {
         this.register(key).acquire(flow);
     }
 
+    /**
+     * 注册redisson限流器,和缓存到组内
+     * @param key
+     * @return
+     * @throws LimitingCreateException
+     */
     private RRateLimiter register(String key) throws LimitingCreateException {
         String cacheKey = CACHE_KEY + key;
         //从组中获取限流器
@@ -60,6 +65,12 @@ public class LimitingSupportByRedisImpl implements LimitingSupport {
         return rateLimiter;
     }
 
+    /**
+     * 转化timeutil使得Redisson看得懂
+     * @param timeUnit
+     * @return
+     * @throws LimitingCreateException
+     */
     private RateIntervalUnit transformationTimeUtil(TimeUnit timeUnit) throws LimitingCreateException {
         if (timeUnit == TimeUnit.SECONDS) {
             return RateIntervalUnit.SECONDS;
@@ -78,6 +89,11 @@ public class LimitingSupportByRedisImpl implements LimitingSupport {
             }
         }
 
+    }
+
+    @Override
+    public LimitingGroupObject getLimitingGroupObject(){
+        return limitingGroupObject;
     }
 
 }

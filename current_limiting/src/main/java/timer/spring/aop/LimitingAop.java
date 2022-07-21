@@ -19,7 +19,6 @@ import timer.main.context.OperationLimiting;
  * @Date: 2021/12/15 10:23
  * @Description:
  **/
-@Component
 @Aspect
 @Slf4j
 @ConditionalOnClass(LimitingContext.class)
@@ -38,7 +37,9 @@ public class LimitingAop {
 
     @Around("cutPoint()&& @annotation(limiting)")
     public Object advice(ProceedingJoinPoint joinPoint, Limiting limiting) throws Throwable {
+        //适用于获取Ip
         ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        //尝试获取
         if (!this.operationLimiting.acquire(joinPoint.getTarget().getClass(), (MethodSignature) joinPoint.getSignature(),
                 limiting, sra == null ? null : sra.getRequest())) {
             throw new RuntimeException("访问受限");

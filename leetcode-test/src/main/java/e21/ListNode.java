@@ -6,8 +6,8 @@ package e21;
  * @Description:
  **/
 public class ListNode {
-    int val;
-    ListNode next;
+    public int val;
+    public ListNode next;
 
     ListNode() {
     }
@@ -16,8 +16,10 @@ public class ListNode {
         this.val = val;
     }
 
-    ListNode(int val, ListNode next) {
+    public ListNode(int val, ListNode next) {
         this.val = val;
         this.next = next;
     }
+
+
 }
